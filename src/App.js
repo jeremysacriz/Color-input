@@ -2,25 +2,33 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-   const [color, setColor] = useState('black');
+   /* Array destructuring: 
+   - First argument is initial value (value passed in useState('...'))
+   - Second argument is the function which changes the state of the UI
+   */
+   const [color, setColor] = useState('black'); 
    const [result, setResult] = useState();
 
-   const handleSubmit = (e) => {
-      e.preventDefault()
+   /* The function below is passed as an event handler, rather than a string. 
+   - HTML: onSubmit="handleSubmit(e)", passed as a string
+   - JSX: onSubmit={handleSubmit}, passed as an event handler enclosed in curly braces (evaluates JS expressions)
+   */
+   const handleSubmit = (e) => { 
+      e.preventDefault() // cancels the default action that belongs to the event
 
       let colorValue = e.target.username.value
       let s = new Option().style;
       s.color = colorValue
 
-      let regex = /^#[0-9A-F]{6}$/i
-      let result = regex.test(colorValue)
+      let regex = /^#[0-9A-F]{6}$/i // this regex tests if the user input matches a specific hex code
+      let result = regex.test(colorValue) // returns true or false depending on user input
 
       if (s.color === colorValue || result === true) {
-         setColor(colorValue)
-         setResult(true)
+         setColor(colorValue) // this function changes the state of the UI to the color that the user submitted
+         setResult(true) // displays a message to the user 'This color is {colorValue}'
       } else {
          console.log('Invalid color')
-         setResult(false)
+         setResult(false) // displays a message to the user 'Please enter a valid color'
       }
    }
 
